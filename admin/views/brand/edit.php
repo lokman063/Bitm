@@ -55,6 +55,20 @@ ob_start();
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label for="link">Enter Link Name</label>
+                    <input id="link"
+                           value="<?php echo $brand['link']?>"
+                           type="text"
+                           name="link"
+                           placeholder="e.g. Bashundhara "
+                           autofocus="autofocus"
+                           class="form-control">
+                    <div class="help-block text-muted">Enter Link </div>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
             <div class="col-lg-6">
                 <div class="form-group">
                     <label for="picture">Picture</label>

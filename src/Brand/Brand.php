@@ -237,13 +237,14 @@ if (empty($data)) {
 //prepare data
 $this->prepare($data);
     
-$query = "UPDATE `brands` SET `title` = :title,
-`picture` = :picture, 
-`link` = :link, 
-`is_active` = :is_active,
-`modified_at` = :modified_at,
- WHERE `brands`.`id` = :id;";
 
+
+            $query = "UPDATE `brands` SET `title` = :title,
+            `link` = :link, 
+            `picture` = :picture,
+            `is_active` = :is_active,
+          
+            `modified_at` = :modified_at WHERE `brands`.`id` = :id;";
 
 $sth = $this->conn->prepare($query);
 $sth->bindParam(':id',$this->id);
@@ -262,6 +263,7 @@ return $result;
 private function prepare($data){
  
 
+    $this->title = $data['id'];
     $this->title = $data['title'];
     $this->link = $data['link'];
     $this->is_active = $data['is_active'];

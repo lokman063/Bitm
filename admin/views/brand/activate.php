@@ -1,22 +1,25 @@
 <?php
 
+use Bitm\Utility\Utility;
 use Bitm\Utility\Message;
-
+use Bitm\Brand\Brand;
+//print_r($_SERVER['REQUEST_METHOD']); die();
 include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
-$id = $_GET['id'];
-$query = "UPDATE brands SET is_active = 1 WHERE id = :id";
 
-$sth = $conn->prepare($query);
-$sth->bindParam(':id',$id);
-$result = $sth->execute();
+
+
+$brand = new Brand();
+$result = $brand->activate($_GET['id']);
 
 //redirect to index page
 if($result){
-    Message::set('Brand has been Activated successfully.');
+    Message::set('Brand has been activated successfully.');
+   // header("location:inactive.php");
     header("location:inactive.php");
-}else {
+}else{
     Message::set('Sorry.. There is a problem. Please try again later');
     //log
     header("location:active.php");
 }
+
 

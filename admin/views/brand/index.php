@@ -27,8 +27,8 @@ ob_start();
         <div class="btn-toolbar mb-2 mb-md-0">
             <button type="button" class="btn btn-sm btn-outline-secondary">
                 <span data-feather="calendar"></span>
-                <a href="<?=VIEW;?>brand/active.php" style="color: black">Active brands</a>
-                | <a href="<?=VIEW;?>brand/inactive.php" style="color: black">In active brands</a>
+                <a href="<?=VIEW;?>brand/active.php" style="color: black">Active </a>
+                | <a href="<?=VIEW;?>brand/inactive.php" style="color: black">Inactive </a>
                 | <a href="<?=VIEW;?>brand/create.php" style="color: black">Add New</a>
             </button>
         </div>
@@ -63,8 +63,15 @@ ob_start();
 
                                 </td>
 
-                                <td> <a href="<?=VIEW?>brand/edit.php?id=<?php echo $brand['id']?>">Edit</a>
-                                    | <a href="<?=VIEW?>brand/delete.php?id=<?php echo $brand['id']?>">Delete</a></td>
+                                <td > <a type="button" class="btn btn-primary btn-sm" href="<?=VIEW?>brand/edit.php?id=<?php echo $brand['id']?>">Edit</a>
+                                             <p> </p>
+                                             <p> </p>
+                                            <form action="<?=VIEW?>brand/delete.php" method="post">
+                                                <input type="hidden" name="picture" value="<?php echo $brand['picture'];?>">
+                                                <input type="hidden" name="id" value="<?php echo $brand['id'];?>">
+                                                <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
+                                        </td>
+                                        </form></td>
                             </tr>
                         <?php }}else{
                         ?>

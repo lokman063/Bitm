@@ -1,14 +1,15 @@
 <?php
 include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
+use Bitm\Utility\Message;
+use Bitm\Utility\Utility;
+use Bitm\Brand\Brand;
+
+
 //selection query
-$query = "SELECT * FROM brands WHERE is_active = 1 ORDER BY id ASC";
-$sth = $conn->prepare($query);
-$sth->execute();
-$brands = $sth->fetchAll(PDO::FETCH_ASSOC);
+$brand = new Brand();
+$brands = $brand->active();
 
-use Bitm\Utility\Message; ?>
 
-<?php
 ob_start();
 ?>
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
@@ -26,8 +27,8 @@ ob_start();
         <div class="btn-toolbar mb-2 mb-md-0">
             <button type="button" class="btn btn-sm btn-outline-secondary">
                 <span data-feather="calendar"></span>
-                <a href="<?=VIEW;?>brand/active.php" style="color: black">Active Brands</a>
-                | <a href="<?=VIEW;?>brand/inactive.php" style="color: black">In active Brands</a>
+                <a href="<?=VIEW;?>brand/active.php" style="color: black">Active </a>
+                | <a href="<?=VIEW;?>brand/inactive.php" style="color: black">Inactive</a>
                 | <a href="<?=VIEW;?>brand/create.php" style="color: black">Add New</a>
             </button>
         </div>
@@ -61,9 +62,8 @@ ob_start();
                                     <h3><a href="show.php?id=<?php echo $brand['id'] ?>"><?php echo $brand['title'];?></a></h3>
                                 </td>
 
-                                <td> <a href="<?=VIEW?>brand/edit.php?id=<?php echo $brand['id']?>">Edit</a>
-                                    | <a href="<?=VIEW?>brand/delete.php?id=<?php echo $brand['id']?>">Delete</a>
-                                    | <a href="<?=VIEW?>brand/deactivate.php?id=<?php echo $brand['id']?>">Deactivate</a>
+                                <td> 
+                                     <a href="<?=VIEW?>brand/deactivate.php?id=<?php echo $brand['id']?>">Deactivate</a>
                                 </td>
                             </tr>
                         <?php }}else{

@@ -37,7 +37,6 @@ $brand = new Brand();
 $result = $brand->update($data);
 
 
-
 if($result){
     Message::set('Brand has been Updated successfully.');
     header("location:index.php");
