@@ -1,33 +1,24 @@
 <?php
-
-use Bitm\Utility\Message;
-
 include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
+use Bitm\Utility\Message;
+use Bitm\Utility\Utility;
+use Bitm\Category\Category;
+use Bitm\Utility\ImageUpload;
+
+
 //collect the data
-$name = $_POST['name'];
+
+$data = $_POST;
+
+$Category = new Category();
+$result = $Category->store($data);
 
 
-//prepare the insert query
-//selection query
-$query = "INSERT INTO `catagories` (`id`, 
-`name`,
- `link`,
-  `soft_delete`, 
-  `is_draft`,
-   `created_at`,
-    `modified_at`)
-     VALUES (NULL,
-      :name,
-       NULL,
-        NULL,
-         NULL,
-          NULL,
-           NULL);";
-
-$sth = $conn->prepare($query);
-$sth->bindParam(':name',$name);
-$result = $sth->execute();
-
-
-//redirect to index page
-header("location:index.php");
+if($result){
+    Message::set('Category has been added successfully.');
+    header("location:index.php");
+}else {
+    Message::set('Sorry.. There is a problem. Please try again later');
+    //log
+    header("location:create.php");
+}

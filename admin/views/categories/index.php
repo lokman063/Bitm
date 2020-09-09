@@ -2,12 +2,11 @@
 include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
 use Bitm\Utility\Utility;
 use Bitm\Utility\Message;
+use Bitm\Category\Category;
 
-//selection query
-$query = "SELECT * FROM `catagories` ";
-$sth = $conn->prepare($query);
-$sth->execute();
-$catagories= $sth->fetchAll(PDO::FETCH_ASSOC);
+
+$category = new Category(); 
+$categories= $category->all();
 //print_r($result);
 // echo "<li>".$product['title']."</li>";
 
@@ -41,8 +40,8 @@ ob_start();
                             </thead>
                             <tbody>
                             <?php
-                            if($catagories){
-                                foreach($catagories as $category){
+                            if($categories){
+                                foreach($categories as $category){
                                     ?>
                                     <tr class="text-center">
                                         <td class="category-sl"><a href="#"><span class="ion-ios-close"></span></a></td>
@@ -52,8 +51,14 @@ ob_start();
 
                                         </td>
 
-                                        <td> <a href="edit.php?id=<?php echo $category['id']?>">Edit</a>
-                                            | <a href="delete.php?id=<?php echo $category['id']?>">Delete</a></td>
+                                        <td>   <td > <a type="button" class="btn btn-primary btn-sm" href="<?=VIEW?>categories/edit.php?id=<?php echo $category['id']?>">Edit</a>
+                                             <p> </p>
+                                             <p> </p>
+                                            <form action="<?=VIEW?>categories/delete.php" method="post">
+                                                <input type="hidden" name="id" value="<?php echo $category['id'];?>">
+                                                <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
+                                      
+                                        </form></td>
                                     </tr>
                                 <?php } }else{
                                 ?>

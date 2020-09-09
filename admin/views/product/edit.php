@@ -1,13 +1,11 @@
 <?php
 include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
 //selection query
-$id = $_GET['id'];
-$query = 'SELECT * FROM products WHERE id = :id';
-$sth = $conn->prepare($query);
-$sth->bindParam(':id',$id);
-$sth->execute();
-
-$product = $sth->fetch(PDO::FETCH_ASSOC);
+use Bitm\Utility\Message;
+use Bitm\Utility\Utility;
+use Bitm\Product\Product;
+$product = new Product();
+$product = $product->show($_GET['id']);
 
 ?>
 

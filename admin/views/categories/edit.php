@@ -1,14 +1,15 @@
 
 <?php
 //connect to database
-use Bitm\Utility\Message;
+
 include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
 //selection query
-$query = 'SELECT * FROM catagories WHERE id = '.$_GET['id'];
-$sth = $conn->prepare($query);
-$sth->execute();
+use Bitm\Utility\Utility;
+use Bitm\Utility\Message;
+use Bitm\Category\Category;
 
-$category = $sth->fetch(PDO::FETCH_ASSOC);
+$category = new Category();
+$category = $category->show($_GET['id']);
 
 ?>
 
@@ -55,6 +56,21 @@ ob_start();
                                    autofocus="autofocus"
                                    class="form-control">
                             <div class="help-block text-muted">Enter Category Name</div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="title">Enter Category Link</label>
+                            <input id="link"
+                                   value="<?php echo $category['link']?>"
+                                   type="text"
+                                   name="link"
+                                   placeholder="e.g. Stationary and Office"
+                                   autofocus="autofocus"
+                                   class="form-control">
+                            <div class="help-block text-muted">Enter Category link</div>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>

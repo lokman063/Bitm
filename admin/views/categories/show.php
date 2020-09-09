@@ -1,14 +1,13 @@
 <?php
 //connect to database
 use Bitm\Utility\Message;
+use Bitm\Utility\Utility;
+use Bitm\Category\Category;
 include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
 
-//selection query
-$query = 'SELECT * FROM catagories WHERE id = '.$_GET['id'];
-$sth = $conn->prepare($query);
-$sth->execute();
 
-$categories = $sth->fetch(PDO::FETCH_ASSOC);
+$category = new Category(); 
+$categories= $category->show($_GET['id']);
 
 ?>
 <?php

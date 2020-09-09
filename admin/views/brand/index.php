@@ -70,7 +70,7 @@ ob_start();
                                                 <input type="hidden" name="picture" value="<?php echo $brand['picture'];?>">
                                                 <input type="hidden" name="id" value="<?php echo $brand['id'];?>">
                                                 <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
-                                        </td>
+                                      
                                         </form></td>
                             </tr>
                         <?php }}else{

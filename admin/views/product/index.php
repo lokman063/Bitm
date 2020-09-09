@@ -1,10 +1,25 @@
 <?php
 include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
 //selection query
-$query = "SELECT * FROM products ORDER BY id DESC";
-$sth = $conn->prepare($query);
-$sth->execute();
-$products = $sth->fetchAll(PDO::FETCH_ASSOC);
+use Bitm\Utility\Message;
+use Bitm\Utility\Utility;
+use Bitm\Product\Product;
+ if (isset($_POST['search'])) {
+    $product = new Product();
+    $products = $product->search($_POST['search']);
+ if(empty( $banners)){
+
+    $searching = "The Banner not found. Please Try again";
+
+
+ }
+ }else {
+    $product = new Product();
+    $products = $product->all();
+ }
+
+
+
 ?>
 
 <?php
@@ -25,34 +40,27 @@ ob_start();
             <div class="row">
                 <div class="col-md-12 ftco-animate">
                     <div class="cart-list">
-                        <table class="table">
-                            <thead class="thead-primary">
-                            <tr class="text-center">
-                                <th>&nbsp;</th>
-                                <th>Picture</th>
-                                <th>Title</th>
-                                <th>Price(MRP)</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-<?php
-                            if($products){
-                                foreach($products as $product){
-                                    ?>
-                                    <tr class="text-center">
-                                        <td class="product-sl">&nbsp;</td>
-
-                                        <td class="image-prod"><div class="img">
-                                                <img src="<?=UPLOADS?><?php echo $product['picture']?>" 
-                                                     width="140px" height="120px">
-                                            </div></td>
-
-                                        <td class="product-name">
-                                            <h3><a href="show.php?id=<?php echo $product['id'] ?>"><?php echo $product['title'];?></a></h3>
-
-                                        </td>
-                                        <td class="product-price">
+                      
+                    <table class="table table-sm">
+  <thead>
+    <tr>
+     
+    <th>Picture</th>
+   <th>Title</th>
+ <th>Price(MRP)</th>
+<th class="d-flex justify-content-sm-around">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+        <?php
+            if($products){
+            foreach($products as $product){
+        ?>
+                                    
+    <tr>
+    <td class="image-prod"><div class="img"><img src="<?=UPLOADS?><?php echo $product['picture']?>" width="40px" height="30px"> </div></td>
+      <td>  <h6><a href="show.php?id=<?php echo $product['id'] ?>"><?php echo $product['title'];?></a></h6></td>
+       <td class="product-price">
                                             <?php
                                             if($product['special_price'] > 0){
                                                 echo "<strike>".$product['mrp']."</strike>";
@@ -60,15 +68,26 @@ ob_start();
                                             }else{
                                                 echo $product['mrp'];
                                             }
-                                            ?>
-
+                                            ?></td>
+      <td class="d-flex justify-content-sm-around" > 
+                                       
+                                       <div class="d-flex justify-content-center">
+                                       <a type="button" class="btn btn-primary btn-sm" href="<?=VIEW?>product/edit.php?id=<?php echo $product['id']?>"><i class="fas fa-edit"></i></a>
+                                       </div>
+                                       <div class="d-flex justify-content-center">
+                                       <form action="<?=VIEW?>product/delete.php" method="post">
+                                                <input type="hidden" name="id" value="<?php echo $product['id'];?>">
+                                                <button class=" btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete?')"><i class="fas fa-trash"></i></button>
+                                       
+                                        </form>
+                                       </div>
+                                      
                                         </td>
-                                        <td> <a href="<?=VIEW?>product/edit.php?id=<?php echo $product['id']?>">Edit</a>
-                                            | <a href="<?=VIEW?>product/delete.php?id=<?php echo $product['id']?>">Delete</a></td>
-                                    </tr>
+    </tr>
+  
                                 <?php }}else{
                                 ?>
-                                <tr class="text-center">
+                                                      <tr class="text-center">
                                     <td colspan="5">
                                         There is no product available. <a href="create.php">Click Here</a> to add a product.
                                     </td>
@@ -77,8 +96,14 @@ ob_start();
                             }
 ?>
 
-                            </tbody>
-                        </table>
+
+  </tbody>
+</table>
+                      
+                      
+                      
+                     
+
                     </div>
                 </div>
             </div>

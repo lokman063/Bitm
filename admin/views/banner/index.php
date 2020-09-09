@@ -129,7 +129,7 @@ ob_start();
                                             <form action="<?=VIEW?>banner/softdelete.php" method="post">
                                                 <input type="hidden" name="id" value="<?php echo $banner['id'];?>">
                                                 <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
-                                        </td>
+                                       
                                         </form></td>
                                     </tr>
                                 <?php }

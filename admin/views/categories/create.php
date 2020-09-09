@@ -48,6 +48,21 @@ ob_start();
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="link">Enter Category Link</label>
+                                <input id="link"
+                                       value=""
+                                       type="text"
+                                       name="link"
+                                       placeholder="e.g. Stationary and Office "
+                                       autofocus="autofocus"
+                                       class="form-control">
+                                <div class="help-block text-muted">Enter Category Link</div>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+        
                         <!--                        <div class="col-lg-6">-->
                         <!--                            <div class="form-group">-->
                         <!--                                <label for="picture">picture</label>-->
