@@ -1,14 +1,12 @@
 <?php
 include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
-use Bitm\Utility\Message;
 use Bitm\Utility\Utility;
-
+use Bitm\Utility\Message;
+use Bitm\Banner\Banner;
 
 //selection query
-$query = "SELECT * FROM banners WHERE soft_delete = 0 ORDER BY id DESC ";
-$sth = $conn->prepare($query);
-$sth->execute();
-$banners = $sth->fetchAll(PDO::FETCH_ASSOC);
+$banner = new Banner(); 
+$banners= $banner->active();
 ?>
 
 
@@ -28,7 +26,7 @@ $banners = $sth->fetchAll(PDO::FETCH_ASSOC);
                 <img src="<?=UPLOADS?><?=$banner['picture'];?>" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5><?=$banner['title'];?></h5>
-                    <p><?=$banner['promotional_message'];?></p>
+                
                 </div>
             </div>
             <?php

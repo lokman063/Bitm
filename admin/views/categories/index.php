@@ -47,7 +47,7 @@ ob_start();
                                         <td class="category-sl"><a href="#"><span class="ion-ios-close"></span></a></td>
 
                                         <td class="category-name">
-                                            <h3><a href="show.php?id=<?php echo $category['id'] ?>"><?php echo $category['name'];?></a></h3>
+                                            <h3><a href="show.php?id=<?php echo $category['id'] ?>"><?php echo $category['category_title'];?></a></h3>
 
                                         </td>
 

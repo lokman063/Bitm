@@ -4,6 +4,7 @@ include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
 use Bitm\Utility\Message;
 use Bitm\Utility\Utility;
 use Bitm\Product\Product;
+
  if (isset($_POST['search'])) {
     $product = new Product();
     $products = $product->search($_POST['search']);
@@ -15,7 +16,11 @@ use Bitm\Product\Product;
  }
  }else {
     $product = new Product();
-    $products = $product->all();
+    $products = $product->index();
+//    echo "<pre></pre>";
+//    print_r( $products);
+//    echo "</pre>";
+//    die();
  }
 
 
@@ -26,15 +31,26 @@ use Bitm\Product\Product;
 ob_start();
 ?>
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+<?php
+    if($message = Message::get()){
+        ?>
+        <div  class="alert alert-success">
+            <?php echo $message;?>
+        </div>
+        <?php
+    }
+    ?>
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-                <h1 >Product</h1>
+                <h1 >Product (Active)</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <button type="button" class="btn btn-sm btn-outline-secondary">
                         <span data-feather="calendar"></span>
-                        <a href="<?=VIEW;?>product/active.php" style="color: black">Active Products</a>
-                        | <a href="<?=VIEW;?>product/inactive.php" style="color: black">In active Products</a>
-                        | <a href="<?=VIEW;?>product/create.php" style="color: black">Add New</a>
+                        <a href="<?=VIEW;?>product/create.php" style="color: black">Add New Product</a>
+                        | <a href="<?=VIEW;?>product/inactive.php" style="color: black">Inactive Products</a>
+                        | <a href="<?=VIEW;?>product/trash.php" style="color: black">Trash Box</a>
+                        | <a href="<?=VIEW;?>product/draft.php" style="color: black">Draft </a>
                     </button>
+                        
                 </div>
             </div>
             <div class="row">
@@ -45,9 +61,12 @@ ob_start();
   <thead>
     <tr>
      
-    <th>Picture</th>
-   <th>Title</th>
+    <th>product_picture</th>
+   <th>product Title</th>
+   <th>Category</th>
+   <th>Brand</th>
  <th>Price(MRP)</th>
+ <th>Product Status</th>
 <th class="d-flex justify-content-sm-around">Action</th>
     </tr>
   </thead>
@@ -58,8 +77,12 @@ ob_start();
         ?>
                                     
     <tr>
-    <td class="image-prod"><div class="img"><img src="<?=UPLOADS?><?php echo $product['picture']?>" width="40px" height="30px"> </div></td>
-      <td>  <h6><a href="show.php?id=<?php echo $product['id'] ?>"><?php echo $product['title'];?></a></h6></td>
+    <td class="image-prod"><div class="img"><img src="<?=UPLOADS?><?php echo $product['product_picture']?>" width="40px" height="30px"> </div></td>
+      <td>  <h6><a href="show.php?id=<?php echo $product['id'] ?>"><?php echo $product['product_title'];?></a></h6></td>
+      
+      <td>  <h6><a href="show.php?id=<?php echo $product['id'] ?>"><?php echo $product['category_title'];?></a></h6></td>
+      
+      <td>  <h6><a href="show.php?id=<?php echo $product['id'] ?>"><?php echo $product['brand_title'];?></a></h6></td>
        <td class="product-price">
                                             <?php
                                             if($product['special_price'] > 0){
@@ -69,19 +92,38 @@ ob_start();
                                                 echo $product['mrp'];
                                             }
                                             ?></td>
+                                              <td class="product-price">
+                                            <?php
+                                            if($product['is_active']= 1){
+                                                echo "Active Product";
+                                              
+                                            }else{
+                                                echo "Inactive Product";
+                                            }
+                                            ?>
+
+                                        </td>
       <td class="d-flex justify-content-sm-around" > 
                                        
                                        <div class="d-flex justify-content-center">
-                                       <a type="button" class="btn btn-primary btn-sm" href="<?=VIEW?>product/edit.php?id=<?php echo $product['id']?>"><i class="fas fa-edit"></i></a>
+                                       <a type="button"data-toggle="tooltip" data-placement="top" title="Edit the Product" class="btn btn-primary btn-sm" href="<?=VIEW?>product/edit.php?id=<?php echo $product['id']?>"><i class="fas fa-edit"></i></a>
                                        </div>
+                                       
                                        <div class="d-flex justify-content-center">
-                                       <form action="<?=VIEW?>product/delete.php" method="post">
+                                       <form action="<?=VIEW?>product/softdelete.php" method="post">
                                                 <input type="hidden" name="id" value="<?php echo $product['id'];?>">
-                                                <button class=" btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete?')"><i class="fas fa-trash"></i></button>
+                                                <button data-toggle="tooltip" data-placement="top" title="Delete the product from list" class=" btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete?')"><i class="fas fa-trash"></i></button>
                                        
                                         </form>
                                        </div>
-                                      
+                                       
+                                       <div class="d-flex justify-content-center">
+                                       <a type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="left" title="Click to inactive the product" href="<?=VIEW?>product/deactivate.php?id=<?php echo $product['id']?>"><i class="fas fa-toggle-off"></i></a>
+                                       </div>
+                                       <div class="d-flex justify-content-center">
+                                       <a type="button" data-toggle="tooltip" data-placement="top" title="Click to draft the product" class="btn btn-primary btn-sm" href="<?=VIEW?>product/drafting.php?id=<?php echo $product['id']?>"><i class="fab fa-draft2digital"></i></a>
+                                       </div>
+
                                         </td>
     </tr>
   

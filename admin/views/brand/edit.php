@@ -37,17 +37,17 @@ ob_start();
         <div class="controls">
             <div class="row">
                 <input id="id"  value="<?php echo $brand['id']?>" type="hidden" name="id" class="form-control">
-                <input id="id"  value="<?php echo $brand['picture']?>" type="hidden" name="pre_picture" class="form-control">
+                <input id="id"  value="<?php echo $brand['brand_picture']?>" type="hidden" name="pre_brand_picture" class="form-control">
 
             </div>
 
             <div class="col-lg-12">
                 <div class="form-group">
-                    <label for="title">Enter Brand Name</label>
-                    <input id="title"
-                           value="<?php echo $brand['title']?>"
+                    <label for="brand_title">Enter Brand Name</label>
+                    <input id="brand_title"
+                           value="<?php echo $brand['brand_title']?>"
                            type="text"
-                           name="title"
+                           name="brand_title"
                            placeholder="e.g. Bashundhara "
                            autofocus="autofocus"
                            class="form-control">
@@ -57,29 +57,29 @@ ob_start();
             </div>
             <div class="col-lg-12">
                 <div class="form-group">
-                    <label for="link">Enter Link Name</label>
-                    <input id="link"
-                           value="<?php echo $brand['link']?>"
+                    <label for="brand_link">Enter brand_link Name</label>
+                    <input id="brand_link"
+                           value="<?php echo $brand['brand_link']?>"
                            type="text"
-                           name="link"
+                           name="brand_link"
                            placeholder="e.g. Bashundhara "
                            autofocus="autofocus"
                            class="form-control">
-                    <div class="help-block text-muted">Enter Link </div>
+                    <div class="help-block text-muted">Enter brand_link </div>
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="form-group">
-                    <label for="picture">Picture</label>
-                    <input id="picture"  value="" type="file" name="picture" class="form-control">
+                    <label for="brand_picture">brand_picture</label>
+                    <input id="brand_picture"  value="" type="file" name="brand_picture" class="form-control">
                     <div class="help-block with-errors"></div>
                 </div>
                 <?php
-                if(!empty($brand['picture'])){
+                if(!empty($brand['brand_picture'])){
                     ?>
                     <img class="img-fluid"
-                         src="<?=UPLOADS;?><?php echo $brand['picture']?>" alt="<?php echo $brand['title']?>">
+                         src="<?=UPLOADS;?><?php echo $brand['brand_picture']?>" alt="<?php echo $brand['brand_title']?>">
                     <?php
                 }else{
                     ?>

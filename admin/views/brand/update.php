@@ -30,7 +30,7 @@ else{
 $is_uploaded= null;
 $upload = new ImageUpload();
 $is_uploaded = $upload->updateImage($_FILES,$data['pre_picture']);
-$data['picture'] = $is_uploaded;
+$data['brand_picture'] = $is_uploaded;
 
 
 $brand = new Brand();

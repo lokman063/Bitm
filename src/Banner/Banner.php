@@ -225,19 +225,20 @@ function delete($id = null){
 
 function update($data){
 
+    
 if (empty($data)) {
    return;
 }
 
 
-
-//     if(array_key_exists('is_active',$data)){
-//     $data['is_active'] = 1;
-// }
-// else{
-//     $data['is_active']= 0;
-// }
-
+//active or deactive
+    if(array_key_exists('is_active',$data)){
+    $data['is_active'] = 1;
+}
+else{
+    $data['is_active']= 0;
+}
+// ---------------------------------------------------
 $this->prepare($data);
     
 $query = "UPDATE `banners` SET `title` = :title,

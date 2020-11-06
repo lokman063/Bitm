@@ -1,5 +1,5 @@
 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-    <div class="sidebar-sticky">
+    <div id="" class="sidebar-sticky">
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a class="nav-link active" href="#">
@@ -20,7 +20,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?=VIEW;?>product/index.php">
+                <a class="nav-link " href="<?=VIEW;?>product/index.php">
                     <span data-feather="shopping-cart"></span>
                     Products
                 </a>

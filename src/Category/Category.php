@@ -8,7 +8,7 @@ use PDO;
 class Category
 {
 public $id = null;
-public $title = null;
+public $category_title = null;
 public $link = null;
 public $is_active = null;
 public $is_draft = null;
@@ -96,13 +96,13 @@ function store($data){
         $this->prepare($data);
 
         $query = "INSERT INTO `categories` (`id`, 
-        `name`,
+        `category_title`,
         `link`,
         `is_deleted`,
         `is_draft`, 
         `created_at`, 
         `modified_at`) VALUES (NULL,
-        :name,
+        :category_title,
         :link,
        null,
         NULL, 
@@ -114,7 +114,7 @@ function store($data){
 $sth = $this->conn->prepare($query);
 
 
-$sth->bindParam(':name',$this->name);
+$sth->bindParam(':category_title',$this->category_title);
 $sth->bindParam(':link',$this->link);
 $sth->bindParam(':created_at',$this->created_at);
 $sth->bindParam(':modified_at',$this->modified_at);
@@ -214,13 +214,13 @@ $this->prepare($data);
     
 
 
-     $query = "UPDATE `categories` SET `name` = :name,
+     $query = "UPDATE `categories` SET `category_title` = :category_title,
             `link` = :link, 
              `modified_at` = :modified_at WHERE `categories`.`id` = :id;";
 
 $sth = $this->conn->prepare($query);
 $sth->bindParam(':id',$this->id);
-$sth->bindParam(':name',$this->name);
+$sth->bindParam(':category_title',$this->category_title);
 $sth->bindParam(':link',$this->link);
 $sth->bindParam(':modified_at',$this->modified_at);
 $result = $sth->execute();
@@ -234,7 +234,7 @@ private function prepare($data){
  
 
 
-    $this->name = $data['name'];
+    $this->category_title = $data['category_title'];
     $this->link = $data['link'];
     $this->modified_at = date('Y-m-d h:i:s', time());
 

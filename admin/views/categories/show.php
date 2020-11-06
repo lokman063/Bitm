@@ -36,7 +36,7 @@ ob_start();
                                     <div class="brand">
                                        
                                         <div class="text ">
-                                            <h3><a href="#"><?php echo $categories['name']?></a></h3>
+                                            <h3><a href="#"><?php echo $categories['category_title']?></a></h3>
 
 
                                         </div>

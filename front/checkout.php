@@ -1,18 +1,4 @@
-<?php
-print_r($_REQUEST);
-die();
-//ini_set('display_errors','On');
 
-include_once($_SERVER["DOCUMENT_ROOT"] . "/phpcrud/bootstrap.php");
-//selection query
-$query = "SELECT * FROM carts ORDER BY id ASC ";
-$sth = $conn->prepare($query);
-$sth->execute();
-$carts = $sth->fetchAll(PDO::FETCH_ASSOC);
-
-use Bitm\Utility\Utility;
-use Bitm\Utility\Message;
-?>
 
 
 <!DOCTYPE html>

@@ -17,7 +17,7 @@ $data = $_POST;
 $upload = new ImageUpload();
 $is_uploaded = $upload->addImage($_FILES);
 
-$data['picture'] = $is_uploaded ;
+$data['brand_picture'] = $is_uploaded ;
 
 $brand = new Brand();
 $result = $brand->store($data);

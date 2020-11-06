@@ -1,16 +1,21 @@
 <?php
-//ini_set('display_errors','On');
+session_start:
 
 include_once($_SERVER["DOCUMENT_ROOT"] . "/phpcrud/bootstrap.php");
 //selection query
-$query = "SELECT * FROM carts ORDER BY id ASC ";
-$sth = $conn->prepare($query);
-$sth->execute();
-$carts = $sth->fetchAll(PDO::FETCH_ASSOC);
-
 use Bitm\Utility\Utility;
 use Bitm\Utility\Message;
+use Bitm\Cart\Cart;
+
+$status="";
+
+
+
+
 ?>
+
+
+
 
 
 
@@ -46,71 +51,112 @@ use Bitm\Utility\Message;
                                             <tbody>
                                             <?php
                                             $subtotal = 0;
-                                            foreach($carts as $cart):
-                                                $subtotal = $subtotal + $cart['unite_price'] * $cart['qty'];
+                                            if(!empty($_SESSION["shopping_cart"])){
+                                                  foreach($_SESSION["shopping_cart"] as $cart):
+                                                $subtotal = $subtotal + $cart['mrp'] * $cart['qty'];
+                                                ?>
 
-                                            ?>
+
+
+                                              
+                                            
+                                          
+                                          
                                             <tr class="text-center">
                                                 <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
 
-                                                <td class="image-prod"><div class="img"><img src="<?=UPLOADS;?><?php echo $cart['picture']?>" width="140px" height="120px"></div></td>
+                                                <td class="image-prod"><div class="img"><img src="<?=UPLOADS;?><?php echo $cart['product_picture']?>" width="140px" height="120px"></div></td>
 
                                                 <td class="product-name">
                                                     <h3><?php echo $cart['product_title']?></h3>
                                                 </td>
 
-                                                <td class="price"><?php echo $cart['unite_price']?></td>
+                                                <td class="price"><?php echo $cart['mrp']?></td>
 
                                                 <td class="quantity">
                                                     <form action="updatecart.php" method="post">
                                                     <div class="input-group mb-3">
 
-                                                       <input type="hidden" name="id" class="quantity form-control input-number" value="<?php echo $cart['id']?>" min="1" max="100">
+                                                       <input type="hidden" name="product_code" class="quantity form-control input-number" value="<?php echo $cart['product_code']?>">
                                                         <input type="number" name="qty" class="quantity form-control input-number" value="<?php echo $cart['qty']?>" min="1" max="100">
                                                     </div>
                                                         <button type="submit">Update Cart</button>
-                                                        <a href="deletecart.php?id=<?php echo $cart['id']; ?>">Remove From Cart</a>
+                                                        
                                                     </form>
+                                    <form method='post' action='deletecart.php'>
+                                    <input type='hidden' name='product_code' value="<?php echo $cart["product_code"]; ?>" />
+                                    <input type='hidden' name='action' value="remove" />
+                                    <button class="btn btn-danger" type="submit" >Remove From Cart</button>
+                                    </form>
+                                                   
 
                                                 </td>
 
-                                                <td class="total"><?php echo $cart['total_price']= $cart['unite_price'] * $cart['qty']?></td>
+                                                <td class="total"><?php echo $cart['total_price']= $cart['mrp'] * $cart['qty'];?></td>
                                             </tr><!-- END TR-->
                                             <?php
                                             endforeach;
-                                            ?>
+                                           
+                                        }
+                                        ?>
+                                         
 
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row justify-content-end">
+
+                            <?php
+                            if (empty($_SESSION["shopping_cart"])) {
+                                ?>
+<div class="row justify-content-end">
+                                <div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+                                    <div class="cart-total mb-3">
+                                        <h3>No Cart available</h3>
+                                      
+                                       
+                                    </div>
+                                   
+                                    <p class="text-center"><a href="http://localhost/phpcrud/front/products.php" class="btn btn-primary py-3 px-4">Go Product List</a></p>
+                                </div>
+                            </div>
+                        </div>
+                                <?php
+                            }else {
+                                ?>
+
+<div class="row justify-content-end">
                                 <div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
                                     <div class="cart-total mb-3">
                                         <h3>Cart Totals</h3>
                                         <p class="d-flex">
-                                            <span>Subtotal</span>
-                                            <span> <?php echo $subtotal;?> BDT</span>
+                                            <h6><u>Subtotal</u></h6>
+                                            <span> <p><?php echo $subtotal;?> BDT</span>
                                         </p>
                                         <p class="d-flex">
-                                            <span>Delivery</span>
-                                            <span> 0.00BDT</span>
+                                            <p>Delivery</p>
+                                           <?php $delivery = 0; echo $delivery;?>
                                         </p>
                                         <p class="d-flex">
-                                            <span>Discount</span>
-                                            <span> 0.00 BDT</span>
+                                            <p> Discount </p>
+                                            <b> <?php $discount = 0; echo $discount;?></b>
                                         </p>
                                         <hr>
-                                        <p class="d-flex total-price">
-                                            <span>Total</span>
-                                            <span><?php echo $cart['total_price']?>BDT</span>
+                                        <p class="d-flex total-price">delivery
+                                            Total </p>
+                                            <span> <?php echo $subtotal + $delivery-$discount?> <b>BDT </b></span>
                                         </p>
                                     </div>
                                     <p class="text-center"><a href="checkout.php" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
                                     <p class="text-center"><a href="http://localhost/phpcrud/front/products.php" class="btn btn-primary py-3 px-4">Go Product List</a></p>
                                 </div>
                             </div>
+
+                                <?php
+                            }
+                            ?>
+                           
                         </div>
                     </section>
 
@@ -266,8 +312,9 @@ use Bitm\Utility\Message;
         <?php //include_once('elements/home_feature_left.php'); ?>
         <hr class="featurette-divider">
     </div>
-    <?php include_once('elements/footer.php'); ?>
+    <?php  include_once('elements/footer.php'); ?>
 </main>
-<?php include_once('elements/scripts.php'); ?>
+    <?php include_once('elements/scripts.php'); ?>
+
 </body>
 </html>

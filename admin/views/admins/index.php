@@ -5,6 +5,7 @@
 include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
 use Bitm\Utility\Message;
 use Bitm\Utility\Utility;
+use Bitm\Admin\Admin;
 global $get_page;
 
 //connect to database
@@ -16,43 +17,44 @@ global $get_page;
 // }else {
 //     $limit = 5;
 // }
+ $admin = new Admin();
+ $admins = $admin->index();
 
-
-if (isset($_GET['page'])) {
-$get_page = $_GET['page'];
+// if (isset($_GET['page'])) {
+// $get_page = $_GET['page'];
    
  
-$next = $get_page + 1;
-$previous =$get_page - 1 ;
+// $next = $get_page + 1;
+// $previous =$get_page - 1 ;
 
 
 
-}
-if ($get_page == "" || $get_page=="1") {
-    $targetPage = "0";
+// }
+// if ($get_page == "" || $get_page=="1") {
+//     $targetPage = "0";
    
 
-}
-else {
-    $targetPage = ($get_page*5)-5;
-}
+// }
+// else {
+//     $targetPage = ($get_page*5)-5;
+// }
 
 
-//selection query 
-$query = "SELECT * FROM `admins`  ORDER BY id DESC limit $targetPage, 5";
-$sth = $conn->prepare($query);
-$sth->execute();
-$admins = $sth->fetchAll(PDO::FETCH_ASSOC);
-//for pagination 
-$query2 = "SELECT * FROM `admins` WHERE is_deleted = 0 ";
-$sth = $conn->prepare($query2);
-$sth->execute();
-$admin_list = $sth->fetchAll(PDO::FETCH_ASSOC);
-    $count = count($admin_list);
+// //selection query 
+// $query = "SELECT * FROM `admins`  ORDER BY id DESC limit $targetPage, 5";
+// $sth = $conn->prepare($query);
+// $sth->execute();
+// $admins = $sth->fetchAll(PDO::FETCH_ASSOC);
+// //for pagination 
+// $query2 = "SELECT * FROM `admins` WHERE is_deleted = 0 ";
+// $sth = $conn->prepare($query2);
+// $sth->execute();
+// $admin_list = $sth->fetchAll(PDO::FETCH_ASSOC);
+//     $count = count($admin_list);
 
-    $counts = $count/4;
+//     $counts = $count/4;
     
-    $pages = ceil($counts);
+//     $pages = ceil($counts);
  
 
 

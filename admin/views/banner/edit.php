@@ -65,7 +65,7 @@ ob_start();
            //for showing picture or no showing
            if(!empty($banners['picture'])){
                ?>
-               <div><img class="col-3" src="<?=UPLOADS;?><?php echo $banners['picture']?>" " alt="<?php echo $banners['title']?>"></div>
+               <div><img class="col-3" src="<?=UPLOADS;?><?php echo $banners['picture']?>"  alt="<?php echo $banners['title']?>"></div>
             <?php
            } else{
                ?>
@@ -78,15 +78,15 @@ ob_start();
 
 
 
-            <div class="col-lg-8">
-                                            <div class="form-group">
+    <div class="col-lg-8">
+    <div class="form-group">
 
 
-                                                   <label for="link">Link</label>
-                                                <input id="link"  value="<?php echo $banners['link']?>" type="text" name="link" class="form-control">
-                                                    <div class="help-block with-errors"></div>
-                                              </div>
-                                          </div>
+    <label for="link">Link</label>
+    <input id="link"  value="<?php echo $banners['link']?>" type="text" name="link" class="form-control">
+    <div class="help-block with-errors"></div>
+    </div>
+    </div>
             <div class="col-lg-8">
                 <div class="form-group">
                     <label for="promotional_message"><h4>Promotional Message</h4></label>
@@ -98,22 +98,22 @@ ob_start();
 
             <?php
 
-            if ($banners['is_active']){
-                $checked = 'checked="checked"';
-            }
-            else{
-                $checked = '';
-            }
-            ?>
+if ($banners['is_active']){
+$checked = 'checked="checked"';
+}
+else{
+$checked = '';
+}
+?>
 
 
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for="is_active">is_active</label>
-                                            <input  id="is_active" <?=$checked?>  value="" type="checkbox" name="is_active" class="form-control">
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                    </div>
+<div class="col-lg-6">
+<div class="form-group">
+<label for="is_active">is_active</label>
+<input  id="is_active" <?=$checked?>  value="" type="checkbox" name="is_active" class="form-control">
+<div class="help-block with-errors"></div>
+</div>
+</div>
 
             <button type="submit" class="btn btn-success">
                 Send & Save Product

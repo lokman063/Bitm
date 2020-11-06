@@ -65,7 +65,7 @@ ob_start();
                                             </div>
 
 
-<div class="col-lg-6">
+
                     <button type="submit" class="btn btn-success">
                         Save Banner
                     </button>

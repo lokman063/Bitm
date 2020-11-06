@@ -36,11 +36,11 @@ ob_start();
                         <!--                        </div>-->
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="name">Enter Category Name</label>
-                                <input id="name"
+                                <label for="category_title">Enter Category Name</label>
+                                <input id="category_title"
                                        value=""
                                        type="text"
-                                       name="name"
+                                       name="category_title"
                                        placeholder="e.g. Stationary and Office "
                                        autofocus="autofocus"
                                        class="form-control">

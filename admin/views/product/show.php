@@ -1,12 +1,23 @@
 <?php
 include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
+use Bitm\Utility\Message;
+use Bitm\Utility\Utility;
+use Bitm\Product\Product;
 //selection query
-$id = $_GET['id'];
-$query = 'SELECT * FROM products WHERE id = :id';
-$sth = $conn->prepare($query);
-$sth->bindParam(':id',$id);
-$sth->execute();
-$product = $sth->fetch(PDO::FETCH_ASSOC);
+
+$products = new Product();
+$product = $products->show($_GET['id']);
+
+
+
+
+if(empty($product)){
+    Message::set(' Product is not Found');
+    header("location:index.php");
+    return $product;
+}
+
+
 ?>
 
 <?php
@@ -14,6 +25,7 @@ ob_start();
 ?>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
                 <h1 >Product</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
@@ -29,11 +41,11 @@ ob_start();
                             <div class="row">
                                 <div class="col-sm col-md-6 col-lg-3 ">
                                     <div class="product">
-                                        <a href="#" class="img-prod"><img class="img-fluid" src="<?=UPLOADS;?><?php echo $product['picture']?>" alt="<?php echo $product['title']?>">
+                                        <a href="#" class="img-prod"><img class="img-fluid" src="<?=UPLOADS;?><?php echo $product['product_picture']?>" alt="<?php echo $product['product_title']?>">
                                             <span class="status">30%</span>
                                         </a>
                                         <div class="text ">
-                                            <h3><a href="#"><?php echo $product['title']?></a></h3>
+                                            <h3><a href="#"><?php echo $product['product_title']?></a></h3>
                                             <div class="d-flex">
                                                 <div class="pricing">
                                                     <span class="price-sale">$<?php echo $product['mrp']?></span>

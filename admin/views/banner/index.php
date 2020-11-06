@@ -28,15 +28,17 @@ use Bitm\Banner\Banner;
 ob_start();
 ?>
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+
     <?php
     if($message = Message::get()){
         ?>
-        <div class="alert alert-success">
+        <div  class="alert alert-success">
             <?php echo $message;?>
         </div>
         <?php
     }
     ?>
+    
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
                     <h1 >BANNERS</h1>
 <div>

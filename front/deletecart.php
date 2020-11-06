@@ -2,14 +2,13 @@
 include_once($_SERVER["DOCUMENT_ROOT"] . "/phpcrud/bootstrap.php");
 
 use Bitm\Utility\Message;
+use Bitm\Cart\Cart;
+use Bitm\Utility\Utility;
+
+$data = $_POST;
+
+$cart = new Cart();
+$carts = $cart->deletecart($data );
 
 
-$id = $_GET['id'];
-$query = "DELETE FROM `carts` WHERE `carts`.`id` = :id;";
-
-$sth = $conn->prepare($query);
-$sth->bindParam(':id',$id);
-$result = $sth->execute();
-
-
-    header("location:cart.php");
+ header("location:cart.php");

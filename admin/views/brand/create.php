@@ -28,24 +28,24 @@ ob_start();
 
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <label for="title">Enter Brand Title</label>
-                            <input id="title"
+                            <label for="brand_title">Enter Brand brand_title</label>
+                            <input id="brand_title"
                                    value=""
                                    type="text"
-                                   name="title"
-                                   placeholder="title here "
+                                   name="brand_title"
+                                   placeholder="brand_title here "
                                    autofocus="autofocus"
                                    class="form-control">
                             <div class="help-block text-muted">Enter Brand Title</div>
                             <div class="help-block with-errors"></div>
                         </div>
                         <div class="form-group">
-                            <label for="link">Enter Brand Link</label>
-                            <input id="link"
+                            <label for="brand_link">Enter Brand brand_link</label>
+                            <input id="brand_link"
                                    value=""
                                    type="text"
-                                   name="link"
-                                   placeholder="link here "
+                                   name="brand_link"
+                                   placeholder="brand_link here "
                                    autofocus="autofocus"
                                    class="form-control">
                             <div class="help-block text-muted">Enter Brand Title</div>
@@ -54,8 +54,8 @@ ob_start();
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label for="picture">Picture</label>
-                            <input id="picture"  value="" type="file" name="picture" class="form-control">
+                            <label for="brand_picture">brand_picture</label>
+                            <input id="brand_picture"  value="" type="file" name="brand_picture" class="form-control">
                             <div class="help-block with-errors"></div>
                         </div>
 

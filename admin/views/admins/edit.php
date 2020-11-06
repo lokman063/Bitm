@@ -2,15 +2,13 @@
 include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
 use Bitm\Utility\Utility;
 use Bitm\Utility\Message;
+use Bitm\Admin\Admin;
 
 //selection query
-$id = $_GET['id'];
-$query = 'SELECT * FROM admins WHERE id = :id';
-$sth = $conn->prepare($query);
-$sth->bindParam(':id',$id);
-$sth->execute();
 
-$admin = $sth->fetch(PDO::FETCH_ASSOC);
+$admins = new Admin();
+
+$admin = $admins->show( $_GET['id']);
 
 ?>
 

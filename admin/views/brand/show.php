@@ -35,11 +35,11 @@ ob_start();
             }
             ?>
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-                <h1 >banner</h1>
+                <h1 >Brand</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <button type="button" class="btn btn-sm btn-outline-secondary">
                         <span data-feather="calendar"></span>
-                        <a href="<?=VIEW;?>banner/index.php" style="color: black">Go to list</a>
+                        <a href="<?=VIEW;?>brand/index.php" style="color: black">Go to list</a>
                     </button>
                 </div>
             </div>
@@ -50,15 +50,15 @@ ob_start();
                             <div class="row">
                                 <div class="col-sm  ">
                                     <div class="banner">
-                                        <a href="#" class="img-prod"><div class="img"><img src="<?=UPLOADS;?><?php echo $brands['picture']?>" width="750px" height="350px"></div>
+                                        <a href="#" class="img-prod"><div class="img"><img src="<?=UPLOADS;?><?php echo $brands['brand_picture']?>" width="750px" height="350px"></div>
 
                                         </a>
                                         <div class="text ">
                        &nbsp;
-                                            <h3><a href="#"><?php echo $brands['title']?></a></h3><br>
+                                            <h3><a href="#"><?php echo $brands['brand_title']?></a></h3><br>
                                             <div class="d-flex">
 
-                                                    <p class="col-lg-4"><?php echo $brands['link']?>&nbsp;
+                                                    <p class="col-lg-4"><?php echo $brands['brand_link']?>&nbsp;
                                                         </p><br>
                                                     <div class="col-lg-6">
                                                      

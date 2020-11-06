@@ -40,8 +40,8 @@ ob_start();
                     <thead class="thead-primary">
                     <tr class="text-center">
                         <th>&nbsp;</th>
-                        <th>Picture</th>
-                        <th>Title</th>
+                        <th>brand_picture</th>
+                        <th>brand_title</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -54,12 +54,12 @@ ob_start();
                                 <td class="brand-sl">&nbsp;</td>
 
                                 <td class="image-prod"><div class="img">
-                                        <img src="<?=UPLOADS?><?php echo $brand['picture']?>"
+                                        <img src="<?=UPLOADS?><?php echo $brand['brand_picture']?>"
                                              width="140px" height="120px">
                                     </div></td>
 
                                 <td class="brand-name">
-                                    <h3><a href="show.php?id=<?php echo $brand['id'] ?>"><?php echo $brand['title'];?></a></h3>
+                                    <h3><a href="show.php?id=<?php echo $brand['id'] ?>"><?php echo $brand['brand_title'];?></a></h3>
 
                                 </td>
 
@@ -67,7 +67,7 @@ ob_start();
                                              <p> </p>
                                              <p> </p>
                                             <form action="<?=VIEW?>brand/delete.php" method="post">
-                                                <input type="hidden" name="picture" value="<?php echo $brand['picture'];?>">
+                                                <input type="hidden" name="brand_picture" value="<?php echo $brand['brand_picture'];?>">
                                                 <input type="hidden" name="id" value="<?php echo $brand['id'];?>">
                                                 <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
                                       

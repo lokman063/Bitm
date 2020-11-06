@@ -47,11 +47,11 @@ ob_start();
                     <!--                        </div>-->
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <label for="title">Enter Category Name</label>
-                            <input id="name"
-                                   value="<?php echo $category['name']?>"
+                            <label for="category_title">Enter Category Name</label>
+                            <input id="category_title"
+                                   value="<?php echo $category['category_title']?>"
                                    type="text"
-                                   name="name"
+                                   name="category_title"
                                    placeholder="e.g. Stationary and Office"
                                    autofocus="autofocus"
                                    class="form-control">

@@ -8,12 +8,19 @@ use PDO;
 class Product
 {
 public $id = null;
-public $title = null;
-public $picture = null;
-public $link = null;
-public $promotional_message = null;
-public $html_banner = null;
+public $product_code = null;
+public $brand_id = null;
+public $category_id = null;
+public $product_title = null;
+public $product_picture = null;
+public $short_description = null;
+public $description = null;
+public $cost = null;
+public $mrp = null;
+public $special_price = null;
+public $is_new = null;
 public $is_active = null;
+public $total_sales = null;
 public $is_draft = null;
 public $is_deleted = 0;
 public $created_at = null;
@@ -25,54 +32,33 @@ $this->conn = Db::connect();
 
 }
 
-
-function all(){
-
-    //selection query
-//$query = "SELECT * FROM products WHERE is_deleted = 0 ORDER BY id DESC ";
- $query = "SELECT * FROM products ORDER BY id DESC ";
+// index--------------------------------------------------------------------------------------
+function index(){
+$query = "SELECT products.id, products.product_code, products.short_description, products.product_title, products.special_price , products.product_picture, products.mrp, brands.brand_title, categories.category_title FROM products join brands ON  brands.id = products.brand_id join categories ON categories.id = products.category_id WHERE products.is_active = 1 AND products.is_deleted = 0 ORDER BY product_title ASC;  ";
 $sth = $this->conn->prepare($query);
 $sth->execute();
 return $sth->fetchAll(PDO::FETCH_ASSOC);
 }
+// index--------------------------------------------------------------------------------------end
+// index--------------------------------------------------------------------------------------
+function product(){
+    $query = "SELECT * FROM products WHERE is_active = 1 AND id=:id;";
 
+    $sth = $this->conn->prepare($query);
+    $sth->bindParam(':id',$id);
+    return $sth->execute();
+}
+// index--------------------------------------------------------------------------------------end
+
+
+// active--------------------------------------------------------------------------------------
 function active(){
-
-
 $query = "SELECT * FROM products WHERE is_active = 1 ORDER BY id DESC ";
 $sth = $this->conn->prepare($query);
 $sth->execute();
 return $products = $sth->fetchAll(PDO::FETCH_ASSOC);
 }
-function inactive(){
 
-
-$query = "SELECT * FROM products WHERE is_active = 0 ORDER BY id DESC ";
-$sth = $this->conn->prepare($query);
-$sth->execute();
-return $products = $sth->fetchAll(PDO::FETCH_ASSOC);
-}
-
-function trash(){
-
-
-$query = "SELECT * FROM products WHERE is_deleted = 1 ORDER BY id DESC ";
-$sth = $this->conn->prepare($query);
-$sth->execute();
-return $products = $sth->fetchAll(PDO::FETCH_ASSOC);
-}
-
-
-function restore($id){
-    if (empty($id)) {
-        return;
-        }
-        $query = "UPDATE products SET  is_deleted = 0 WHERE id=:id;";
-
-        $sth = $this->conn->prepare($query);
-        $sth->bindParam(':id',$id);
-        return $sth->execute();
-}
 function activate($id){
     if (empty($id)) {
         return;
@@ -82,6 +68,17 @@ function activate($id){
         $sth = $this->conn->prepare($query);
         $sth->bindParam(':id',$id);
         return $sth->execute();
+}
+// active--------------------------------------------------------------------------------------end
+
+
+// inactive--------------------------------------------------------------------------------------
+function inactive(){
+ 
+$query = "SELECT products.id, products.product_title, products.special_price , products.product_picture, products.mrp, brands.brand_title, categories.category_title FROM products join brands ON  brands.id = products.brand_id join categories ON categories.id = products.category_id WHERE products.is_active = 0 AND products.is_deleted = 0 ORDER BY product_title ASC;";
+$sth = $this->conn->prepare($query);
+$sth->execute();
+return $products = $sth->fetchAll(PDO::FETCH_ASSOC);
 }
 function deactivate($id){
     if (empty($id)) {
@@ -93,102 +90,17 @@ function deactivate($id){
         $sth->bindParam(':id',$id);
         return $sth->execute();
 }
+// inactive--------------------------------------------------------------------------------------end
 
-function store($data){
-
-        $this->prepare($data);
-
-    $query = "INSERT INTO `products` (
-    `id`, 
-    `title`,
-    `picture`, 
-    `link`, 
-    `promotional_message`, 
-    `html_banner`,
-    `is_active`, 
-    `is_draft`, 
-    `is_deleted`, 
-    `created_at`,
-    `modified_at`) 
-    VALUES (
-    NULL,
-    :title,
-    :picture, 
-    :link,
-    :promotional_message, 
-    NULL,
-    :is_active, 
-    :is_deleted,
-    NULL,
-   :created_at, 
-   :modified_at);";
+// trash--------------------------------------------------------------------------------------
+function trash(){
 
 
-
+$query = "SELECT * FROM products WHERE is_deleted = 1 ORDER BY id DESC ";
 $sth = $this->conn->prepare($query);
-$sth->bindParam(':title',$this->title);
-$sth->bindParam(':link',$this->link);
-$sth->bindParam(':picture',$this->picture);
-$sth->bindParam(':promotional_message',$this->promotional_message);
-$sth->bindParam(':is_active',$this->is_active);
-$sth->bindParam(':is_deleted',$this->is_deleted);
-$sth->bindParam(':created_at',$this->created_at);
-$sth->bindParam(':modified_at',$this->modified_at);
-
- //$sth->bindParam(':created_at',date('Y-m-d h:i:s', time()));
-// $sth->bindParam(':modified_at',date('Y-m-d h:i:s', time()));
-//$sth->bindParam(':promotional_message',$promotional_message);
-//$sth->bindParam(':html_banner',$html_banner);
-$result = $sth->execute();
-return $result;
-
-
-
-
-}
-
-function show($id = null){
-    if (empty($id)) {
-            return;
-            }
-
-$query = 'SELECT * FROM products WHERE id = :id';
-$sth = $this->conn->prepare($query);
-$sth->bindParam(':id',$id);
 $sth->execute();
-$banner = $sth->fetch(PDO::FETCH_ASSOC);
-
-
-
-return $banner;
-
+return $products = $sth->fetchAll(PDO::FETCH_ASSOC);
 }
-
-function search($data){
-
-    
-
-    
-if (isset($data)){
-    $searching = $data;
-    $searching = preg_replace(" #[^0-9a-z]#", " ", $searching);
-    $query = "SELECT * FROM products WHERE title LIKE '%$searching%' OR link LIKE '%$searching%' ";
-   
-    $sth = $this->conn->prepare($query);
-    $sth->execute();
-    return $sth->fetchAll(PDO::FETCH_ASSOC);
-    
-}
-
-}
-
-
-
-
-// function __toString(){
-
-//     return $this->title;
-// }
 function softdelelte($id = null){
 
     if (empty($id)) {
@@ -202,6 +114,163 @@ $sth->bindParam(':id',$id);
 $result = $sth->execute();
 return $result;
 }
+// trash--------------------------------------------------------------------------------------end
+
+// Draft--------------------------------------------------------------------------------------
+function draft(){
+
+
+$query = "SELECT * FROM products WHERE is_draft = 1 ORDER BY id DESC ";
+$sth = $this->conn->prepare($query);
+$sth->execute();
+return $products = $sth->fetchAll(PDO::FETCH_ASSOC);
+}
+function drafting($id = null){
+
+    if (empty($id)) {
+        return;
+        }
+
+        $query = "UPDATE products SET  is_draft = 1 WHERE id=:id;";
+
+$sth = $this->conn->prepare($query);
+$sth->bindParam(':id',$id);
+$result = $sth->execute();
+return $result;
+}
+function unDraft($id){
+    if (empty($id)) {
+        return;
+        }
+        $query = "UPDATE products SET  is_draft = 0 WHERE id=:id;";
+
+        $sth = $this->conn->prepare($query);
+        $sth->bindParam(':id',$id);
+        return $sth->execute();
+}
+// trash--------------------------------------------------------------------------------------end
+
+// restore--------------------------------------------------------------------------------------
+function restore($id){
+    if (empty($id)) {
+        return;
+        }
+        $query = "UPDATE products SET  is_deleted = 0 WHERE id=:id;";
+
+        $sth = $this->conn->prepare($query);
+        $sth->bindParam(':id',$id);
+        return $sth->execute();
+}
+// restore--------------------------------------------------------------------------------------end 
+
+
+
+// Store--------------------------------------------------------------------------------------
+function store($data){
+
+        $this->prepare($data);
+       
+        $query = "INSERT INTO `products` (`id`,
+        `product_code`, 
+        `brand_id`, 
+        `category_id`,
+        `product_title`,
+        `product_picture`,
+        `short_description`,
+        `description`,
+        `cost`, 
+        `mrp`,
+        `special_price`,
+        `is_new`,
+        `is_draft`,
+        `is_active`,
+        `total_sales`,
+        `is_deleted`, 
+        `created_at`,
+        `modified_at`) VALUES (NULL,
+        :product_code, 
+        :brand_id, 
+        :category_id, 
+        :product_title,
+        :product_picture,
+        :short_description,
+        :description, 
+        :cost, 
+        :mrp,
+        :special_price,
+        :is_new, 
+        :is_draft,
+        :is_active,
+        :total_sales,
+        :is_deleted, 
+        :created_at, 
+        :modified_at);";
+
+
+
+$sth = $this->conn->prepare($query);
+
+$sth->bindParam(':product_code',$this->product_code);
+$sth->bindParam(':brand_id',$this->brand_id);
+$sth->bindParam(':category_id',$this->category_id);
+$sth->bindParam(':product_title',$this->product_title);
+$sth->bindParam(':product_picture',$this->product_picture);
+$sth->bindParam(':short_description',$this->short_description);
+$sth->bindParam(':description',$this->description);
+$sth->bindParam(':cost',$this->cost);
+$sth->bindParam(':mrp',$this->mrp);
+$sth->bindParam(':special_price',$this->special_price);
+$sth->bindParam(':total_sales',$this->total_sales);
+$sth->bindParam(':is_active',$this->is_active);
+$sth->bindParam(':is_new',$this->is_new);
+$sth->bindParam(':is_draft',$this->is_draft);
+$sth->bindParam(':is_deleted',$this->is_deleted);
+$sth->bindParam(':created_at',$this->created_at);
+$sth->bindParam(':modified_at',$this->modified_at);
+
+$result = $sth->execute();
+return $result;
+}
+// Store--------------------------------------------------------------------------------------end 
+
+// Show--------------------------------------------------------------------------------------
+function show($id = null){
+    if (empty($id)) {
+            return;
+            }
+
+$query = 'SELECT * FROM products WHERE id = :id';
+$sth = $this->conn->prepare($query);
+$sth->bindParam(':id',$id);
+$sth->execute();
+$banner = $sth->fetch(PDO::FETCH_ASSOC);
+return $banner;
+}
+// Show--------------------------------------------------------------------------------------end
+
+// searching--------------------------------------------------------------------------------------
+function search($data){
+if (isset($data)){
+    $searching = $data;
+    $searching = preg_replace(" #[^0-9a-z]#", " ", $searching);
+    $query = "SELECT * FROM products WHERE product_title LIKE '%$searching%' OR link LIKE '%$searching%' ";
+   
+    $sth = $this->conn->prepare($query);
+    $sth->execute();
+    return $sth->fetchAll(PDO::FETCH_ASSOC);
+    
+}
+
+}
+// searching--------------------------------------------------------------------------------------end
+
+
+
+// function __toString(){
+
+//     return $this->product_title;
+// }
+
 
 function delete($id = null){
 
@@ -224,38 +293,77 @@ function delete($id = null){
 
 
 function update($data){
-
+   
 if (empty($data)) {
    return;
 }
 
 
 
-//     if(array_key_exists('is_active',$data)){
-//     $data['is_active'] = 1;
-// }
-// else{
-//     $data['is_active']= 0;
-// }
-
+//active or deactive---------------------------
+if(array_key_exists('is_active',$data)){
+    $data['is_active'] = 1;
+}
+else{
+    $data['is_active']= 0;
+}
+// --------------------------------------
+//active or deactive---------------------------
+if(array_key_exists('is_new',$data)){
+    $data['is_new'] = 1;
+}
+else{
+    $data['is_new']= 0;
+}
+// --------------------------------------
+//active or deactive---------------------------
+if(array_key_exists('is_draft',$data)){
+    $data['is_draft'] = 1;
+}
+else{
+    $data['is_draft']= 0;
+}
+// --------------------------------------
 $this->prepare($data);
-    
-$query = "UPDATE `products` SET `title` = :title,
-`picture` = :picture, 
-`link` = :link, 
+   
+$query = "UPDATE `products` SET 
+`brand_id` = :brand_id,
+`category_id` = :category_id, 
+`product_title` = :product_title, 
+`product_picture` = :product_picture, 
+`short_description` = :short_description, 
+`description` = :description, 
+`cost` = :cost, 
+`mrp` = :mrp, 
+`special_price` = :special_price, 
+`total_sales` = :total_sales, 
 `is_active` = :is_active,
-`modified_at` = :modified_at,
-`promotional_message` = :promotional_message  WHERE `products`.`id` = :id;";
+`is_new` = :is_new,
+`is_draft` = :is_draft,
+`is_deleted` = :is_deleted,
+`modified_at` = :modified_at WHERE `products`.`id` = :id;";
 
 
 $sth = $this->conn->prepare($query);
+
 $sth->bindParam(':id',$this->id);
-$sth->bindParam(':title',$this->title);
-$sth->bindParam(':link',$this->link);
-$sth->bindParam(':picture',$this->picture);
-$sth->bindParam(':promotional_message',$this->promotional_message);
+$sth->bindParam(':brand_id',$this->brand_id);
+$sth->bindParam(':category_id',$this->category_id);
+$sth->bindParam(':product_title',$this->product_title);
+$sth->bindParam(':product_picture',$this->product_picture);
+$sth->bindParam(':short_description',$this->short_description);
+$sth->bindParam(':description',$this->description);
+$sth->bindParam(':cost',$this->cost);
+$sth->bindParam(':mrp',$this->mrp);
+$sth->bindParam(':special_price',$this->special_price);
+$sth->bindParam(':total_sales',$this->total_sales);
 $sth->bindParam(':is_active',$this->is_active);
+$sth->bindParam(':is_new',$this->is_new);
+$sth->bindParam(':is_draft',$this->is_draft);
+$sth->bindParam(':is_deleted',$this->is_deleted);
 $sth->bindParam(':modified_at',$this->modified_at);
+
+
 $result = $sth->execute();
 
 return $result;
@@ -264,17 +372,39 @@ return $result;
 
 
 private function prepare($data){
+    if (empty($data['is_active'])) {
+        $data['is_active'] =0;}
     
-  
-    $this->title = $data['title'];
-    $this->link = $data['link'];
-    $this->picture = $data['picture'];
-    $this->promotional_message = $data['promotional_message'];
+        if (empty($data['is_new'])) {
+        $data['is_new'] =0;}
+    
+        if (empty($data['is_draft'])) {
+        $data['is_draft'] =0;}
+    
+    if (empty($data['product_code'])) {
+        $data['product_code'] =uniqid();}
+    $this->product_code = $data['product_code'];
+    $this->brand_id = $data['brand_id'];
+    $this->category_id = $data['category_id'];
+    $this->product_title = $data['product_title'];
+    $this->product_picture = $data['product_picture'];
+    $this->short_description = $data['short_description'];
+    $this->description = $data['description'];
+    $this->mrp = $data['mrp'];
+    $this->cost = $data['cost'];
+    $this->special_price = $data['special_price'];
     $this->is_active = $data['is_active'];
+    $this->is_new = $data['is_new'];
+    $this->is_draft = $data['is_draft'];
+    $this->total_sales = $data['total_sales'];
+
     $this->modified_at = date('Y-m-d h:i:s', time());
 
-    if (empty($data['is_active'])) {
-    $data['is_active'] =1;}
+  
+
+
+ 
+
 
        if (array_key_exists('id',$data) && !empty($data['id'])) {
         $this->id = $data['id'];
@@ -283,7 +413,7 @@ private function prepare($data){
     if(!$this->id){
             $this->created_at = date('Y-m-d h:i:s', time());
         }
-  
+
 }
 
 

@@ -8,9 +8,9 @@ use PDO;
 class Brand
 {
 public $id = null;
-public $title = null;
+public $brand_title = null;
 public $picture = null;
-public $link = null;
+public $brand_link = null;
 public $is_active = null;
 public $is_draft = null;
 public $is_deleted = 0;
@@ -97,16 +97,16 @@ function store($data){
         $this->prepare($data);
 
         $query = "INSERT INTO `brands`  (`id`,
-        `title`, 
-        `link`, 
+        `brand_title`, 
+        `brand_link`, 
         `picture`,
         `is_draft`,
         `is_active`, 
         `is_deleted`, 
         `created_at`, 
         `modified_at`) VALUES (NULL,
-        :title, 
-        :link, 
+        :brand_title, 
+        :brand_link, 
         :picture, 
         NULL,
          :is_active, 
@@ -119,8 +119,8 @@ function store($data){
 $sth = $this->conn->prepare($query);
 
 
-$sth->bindParam(':title',$this->title);
-$sth->bindParam(':link',$this->link);
+$sth->bindParam(':brand_title',$this->brand_title);
+$sth->bindParam(':brand_link',$this->brand_link);
 $sth->bindParam(':picture',$this->picture);
 $sth->bindParam(':is_active',$this->is_active);
 $sth->bindParam(':is_deleted',$this->is_deleted);
@@ -167,7 +167,7 @@ function search($data){
 if (isset($data)){
     $searching = $data;
     $searching = preg_replace(" #[^0-9a-z]#", " ", $searching);
-    $query = "SELECT * FROM brands WHERE title LIKE '%$searching%' OR link LIKE '%$searching%' ";
+    $query = "SELECT * FROM brands WHERE brand_title LIKE '%$searching%' OR brand_link LIKE '%$searching%' ";
    
     $sth = $this->conn->prepare($query);
     $sth->execute();
@@ -182,7 +182,7 @@ if (isset($data)){
 
 // function __toString(){
 
-//     return $this->title;
+//     return $this->brand_title;
 // }
 function softdelelte($id = null){
 
@@ -239,8 +239,8 @@ $this->prepare($data);
     
 
 
-            $query = "UPDATE `brands` SET `title` = :title,
-            `link` = :link, 
+            $query = "UPDATE `brands` SET `brand_title` = :brand_title,
+            `brand_link` = :brand_link, 
             `picture` = :picture,
             `is_active` = :is_active,
           
@@ -248,8 +248,8 @@ $this->prepare($data);
 
 $sth = $this->conn->prepare($query);
 $sth->bindParam(':id',$this->id);
-$sth->bindParam(':title',$this->title);
-$sth->bindParam(':link',$this->link);
+$sth->bindParam(':brand_title',$this->brand_title);
+$sth->bindParam(':brand_link',$this->brand_link);
 $sth->bindParam(':picture',$this->picture);
 $sth->bindParam(':is_active',$this->is_active);
 $sth->bindParam(':modified_at',$this->modified_at);
@@ -264,8 +264,8 @@ private function prepare($data){
  
 
 
-    $this->title = $data['title'];
-    $this->link = $data['link'];
+    $this->brand_title = $data['brand_title'];
+    $this->brand_link = $data['brand_link'];
     $this->is_active = $data['is_active'];
     $this->picture = $data['picture'];
 

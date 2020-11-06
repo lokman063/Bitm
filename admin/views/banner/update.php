@@ -6,7 +6,8 @@ use Bitm\Utility\ImageUpload;
 use Bitm\Banner\Banner;
 
 
-
+// print_r($_FILES);
+// die();
 
 //$pre_picture = $data['pre_picture'];
 
@@ -14,17 +15,18 @@ include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
 //collect the data
 
 
-
 $data = $_POST;
 
 
-//else can be avoid by using $is_active = 0;
-if(array_key_exists('is_active',$data)){
-    $data['is_active'] = 1;// also can be use $is_active = $_POST['is_active'];
-}
-else{
-    $data['is_active']  = 0;
-}
+// //else can be avoid by using $is_active = 0;
+// if(array_key_exists('is_active',$data)){
+//     $data['is_active'] = 1;// also can be use $is_active = $_POST['is_active'];
+// }
+// else{
+//     $data['is_active']  = 0;
+// }
+
+
 
 
 

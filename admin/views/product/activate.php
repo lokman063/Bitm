@@ -1,11 +1,25 @@
 <?php
-include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
-$id = $_GET['id'];
-$query = "UPDATE products SET is_active = 1 WHERE id = :id";
 
-$sth = $conn->prepare($query);
-$sth->bindParam(':id',$id);
-$result = $sth->execute();
+use Bitm\Utility\Utility;
+use Bitm\Utility\Message;
+use Bitm\Product\Product;
+//print_r($_SERVER['REQUEST_METHOD']); die();
+include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
+
+
+
+$product = new Product();
+$result = $product->activate($_GET['id']);
 
 //redirect to index page
-header("location:inactive.php");
+if($result){
+    Message::set('Product has been activated successfully.');
+   // header("location:inactive.php");
+    header("location:inactive.php");
+}else{
+    Message::set('Sorry.. There is a problem. Please try again later');
+    //log
+    header("location:active.php");
+}
+
+
