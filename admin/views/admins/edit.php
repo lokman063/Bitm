@@ -87,14 +87,14 @@ ob_start();
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>
-                                    <!-- <div class="col-lg-6">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="nid_birth"><h4>National ID/ Birth Certificate<p>(Optional)</p></h4></label>
                                             <input id="nid_birth" placeholder="Enter The NID (If you have)" value="<?php echo $admin['nid_birth']?>" type="text" name="nid_birth" class="form-control">
                                             <div class="help-block text-muted">Enter Your NID (If you have)</div>
                                             <div class="help-block with-errors"></div>
                                         </div>
-                                    </div> -->
+                                    </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="email"><h4>Email</p></h4></label>
@@ -103,24 +103,16 @@ ob_start();
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>
-                                    
-                               
-                                    <!-- <div class="col-lg-6">
+                                
+                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="password"><h4>Password</h4></label>
                                             <input id="password" placeholder="Enter Your Password" value="" type="password" name="password" class="form-control">
                                             <div class="help-block text-muted">Enter Your Password</div>
                                             <div class="help-block with-errors"></div>
                                         </div>
-                                    </div> -->
-                                    <!-- <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for="c_password"><h4>Confirm Password</p></h4></label>
-                                            <input id="c_password" placeholder="Enter Your Confirm Password"  value="" type="password" name="c_password" class="form-control">
-                                            <div class="help-block text-muted">Enter Your Confirm Password</div>
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                    </div> -->
+                                    </div>
+
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <label for="photo"><h4>Profile Photo</h4></label>

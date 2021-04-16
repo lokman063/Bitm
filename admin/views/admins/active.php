@@ -1,7 +1,4 @@
 <?php
-
-
-
 include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
 use Bitm\Utility\Message;
 use Bitm\Utility\Utility;

@@ -7,24 +7,23 @@ use PDO;
 
 class Admin
 {
-public $id = null;
-public $product_code = null;
-public $brand_id = null;
-public $category_id = null;
-public $product_title = null;
-public $product_picture = null;
-public $short_description = null;
-public $description = null;
-public $cost = null;
-public $mrp = null;
-public $special_price = null;
-public $is_new = null;
-public $is_active = null;
-public $total_sales = null;
+
+ public $id = null;
+public $first_name = null;
+public $last_name = null;
+public $father_name = null;
+public $mother_name = null;
+public $email = null;
+public $picture = null;
+public $phone = null;
+public $password = null;
+public $nid_birth = null;
 public $is_draft = null;
+public $is_active = null;
 public $is_deleted = 0;
 public $created_at = null;
 public $modified_at = null;
+
 public $conn = null;
 
 function __construct(){
@@ -34,7 +33,7 @@ $this->conn = Db::connect();
 
 // index--------------------------------------------------------------------------------------
 function index(){
-$query = "SELECT * FROM admins ";
+$query = "SELECT * FROM admins WHERE is_deleted = 0 ";
 $sth = $this->conn->prepare($query);
 $sth->execute();
 return $sth->fetchAll(PDO::FETCH_ASSOC);
@@ -169,65 +168,55 @@ function restore($id){
 function store($data){
 
         $this->prepare($data);
-       
-        $query = "INSERT INTO `admins` (`id`,
-        `product_code`, 
-        `brand_id`, 
-        `category_id`,
-        `product_title`,
-        `product_picture`,
-        `short_description`,
-        `description`,
-        `cost`, 
-        `mrp`,
-        `special_price`,
-        `is_new`,
-        `is_draft`,
-        `is_active`,
-        `total_sales`,
-        `is_deleted`, 
-        `created_at`,
-        `modified_at`) VALUES (NULL,
-        :product_code, 
-        :brand_id, 
-        :category_id, 
-        :product_title,
-        :product_picture,
-        :short_description,
-        :description, 
-        :cost, 
-        :mrp,
-        :special_price,
-        :is_new, 
-        :is_draft,
-        :is_active,
-        :total_sales,
-        :is_deleted, 
-        :created_at, 
-        :modified_at);";
+
+            $query = "INSERT INTO `admins` (`id`,
+            `first_name`,
+            `last_name`,
+            `father_name`,
+            `mother_name`,
+            `email`, 
+            `picture`,
+            `phone`, 
+            `password`,
+            `nid_birth`,
+            `is_draft`,
+            `is_active`,
+            `is_deleted`, 
+            `modified_at`,
+            `created_at`) VALUES (NULL,
+           :first_name,
+           :last_name,
+           :father_name,
+           :mother_name,
+           :email,
+           :picture,
+           :phone,
+           :password,
+           :nid_birth,
+           :is_draft,
+           :is_active,
+           :is_deleted,
+           :modified_at,
+           :created_at);";
 
 
 
 $sth = $this->conn->prepare($query);
 
-$sth->bindParam(':product_code',$this->product_code);
-$sth->bindParam(':brand_id',$this->brand_id);
-$sth->bindParam(':category_id',$this->category_id);
-$sth->bindParam(':product_title',$this->product_title);
-$sth->bindParam(':product_picture',$this->product_picture);
-$sth->bindParam(':short_description',$this->short_description);
-$sth->bindParam(':description',$this->description);
-$sth->bindParam(':cost',$this->cost);
-$sth->bindParam(':mrp',$this->mrp);
-$sth->bindParam(':special_price',$this->special_price);
-$sth->bindParam(':total_sales',$this->total_sales);
-$sth->bindParam(':is_active',$this->is_active);
-$sth->bindParam(':is_new',$this->is_new);
+$sth->bindParam(':first_name', $this->first_name);
+$sth->bindParam(':last_name', $this->last_name);
+$sth->bindParam(':father_name', $this->father_name);
+$sth->bindParam(':mother_name', $this->mother_name);
+$sth->bindParam(':email',$this->email);
+$sth->bindParam(':phone',$this->phone);
+$sth->bindParam(':password',$this->password);
+$sth->bindParam(':picture',$this->picture);
+$sth->bindParam(':nid_birth', $this->nid_birth);
 $sth->bindParam(':is_draft',$this->is_draft);
+$sth->bindParam(':is_active',$this->is_active);
 $sth->bindParam(':is_deleted',$this->is_deleted);
 $sth->bindParam(':created_at',$this->created_at);
 $sth->bindParam(':modified_at',$this->modified_at);
-
 $result = $sth->execute();
 return $result;
 }
@@ -327,41 +316,38 @@ else{
 $this->prepare($data);
    
 $query = "UPDATE `admins` SET 
-`brand_id` = :brand_id,
-`category_id` = :category_id, 
-`product_title` = :product_title, 
-`product_picture` = :product_picture, 
-`short_description` = :short_description, 
-`description` = :description, 
-`cost` = :cost, 
-`mrp` = :mrp, 
-`special_price` = :special_price, 
-`total_sales` = :total_sales, 
+`first_name` = :first_name, 
+`last_name` = :last_name, 
+`father_name` = :father_name, 
+`mother_name` = :mother_name, 
+`email` = :email, 
+`phone` = :phone, 
+`password` = :password, 
+`picture` = :picture, 
+`nid_birth` = :nid_birth, 
 `is_active` = :is_active,
-`is_new` = :is_new,
+`is_darft` = :is_darft,
 `is_draft` = :is_draft,
 `is_deleted` = :is_deleted,
 `modified_at` = :modified_at WHERE `admins`.`id` = :id;";
 
 
 $sth = $this->conn->prepare($query);
-
 $sth->bindParam(':id',$this->id);
-$sth->bindParam(':brand_id',$this->brand_id);
-$sth->bindParam(':category_id',$this->category_id);
-$sth->bindParam(':product_title',$this->product_title);
-$sth->bindParam(':product_picture',$this->product_picture);
-$sth->bindParam(':short_description',$this->short_description);
-$sth->bindParam(':description',$this->description);
-$sth->bindParam(':cost',$this->cost);
-$sth->bindParam(':mrp',$this->mrp);
-$sth->bindParam(':special_price',$this->special_price);
-$sth->bindParam(':total_sales',$this->total_sales);
+$sth->bindParam(':first_name', $this->first_name);
+$sth->bindParam(':last_name', $this->last_name);
+$sth->bindParam(':father_name', $this->father_name);
+$sth->bindParam(':mother_name', $this->mother_name);
+$sth->bindParam(':email',$this->email);
+$sth->bindParam(':phone',$this->phone);
+$sth->bindParam(':password',$this->password);
+$sth->bindParam(':picture',$this->picture);
+$sth->bindParam(':nid_birth', $this->nid_birth);
 $sth->bindParam(':is_active',$this->is_active);
-$sth->bindParam(':is_new',$this->is_new);
-$sth->bindParam(':is_draft',$this->is_draft);
+$sth->bindParam(':is_darft',$this->is_darft);
 $sth->bindParam(':is_deleted',$this->is_deleted);
 $sth->bindParam(':modified_at',$this->modified_at);
+
 
 
 $result = $sth->execute();
@@ -375,36 +361,31 @@ private function prepare($data){
     if (empty($data['is_active'])) {
         $data['is_active'] =0;}
     
-        if (empty($data['is_new'])) {
-        $data['is_new'] =0;}
-    
+      
         if (empty($data['is_draft'])) {
         $data['is_draft'] =0;}
+        if (empty($data['is_deleted'])) {
+        $data['is_deleted'] =0;}
+
     
-    if (empty($data['product_code'])) {
-        $data['product_code'] =uniqid();}
-    $this->product_code = $data['product_code'];
-    $this->brand_id = $data['brand_id'];
-    $this->category_id = $data['category_id'];
-    $this->product_title = $data['product_title'];
-    $this->product_picture = $data['product_picture'];
-    $this->short_description = $data['short_description'];
-    $this->description = $data['description'];
-    $this->mrp = $data['mrp'];
-    $this->cost = $data['cost'];
-    $this->special_price = $data['special_price'];
+    $this->first_name = $data['first_name'];
+    $this->last_name = $data['last_name'];
+    $this->father_name = $data['father_name'];
+    $this->mother_name = $data['mother_name'];
+    $this->email = $data['email'];
+    $this->phone = $data['phone'];
+    $this->password = $data['password'];
+    $this->picture = $data['picture'];
+    $this->nid_birth = $data['nid_birth'];
+    $this->is_deleted = $data['is_deleted'];
+
     $this->is_active = $data['is_active'];
-    $this->is_new = $data['is_new'];
     $this->is_draft = $data['is_draft'];
-    $this->total_sales = $data['total_sales'];
+
 
     $this->modified_at = date('Y-m-d h:i:s', time());
 
   
-
-
- 
-
 
        if (array_key_exists('id',$data) && !empty($data['id'])) {
         $this->id = $data['id'];

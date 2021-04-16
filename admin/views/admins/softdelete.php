@@ -2,6 +2,7 @@
 
 use Bitm\Utility\Utility;
 use Bitm\Utility\Message;
+use Bitm\Admin\Admin;
 
 include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
 if(strtoupper($_SERVER['REQUEST_METHOD']) == 'GET'){
@@ -9,14 +10,11 @@ if(strtoupper($_SERVER['REQUEST_METHOD']) == 'GET'){
     header('location:index.php');
     exit();
 }
-$id = $_POST['id'];
 
 
-$query = "UPDATE admins SET  is_deleted = 1 WHERE id=:id;";
+$admin = new Admin();
+$result = $admin->softdelelte($_POST['id']);
 
-$sth = $conn->prepare($query);
-$sth->bindParam(':id',$id);
-$result = $sth->execute();
 
 //redirect to index page
 if($result){
@@ -25,7 +23,7 @@ if($result){
 }else{
     Message::set('Sorry.. There is a problem. Please try again later');
     //log
-    header("location:create.php");
+    header("location:index.php");
 }
 
 

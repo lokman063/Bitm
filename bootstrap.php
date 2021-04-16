@@ -14,11 +14,21 @@ define('FRONT','http://localhost/phpcrud/front/');
 
 define('DOCROOT',$_SERVER['DOCUMENT_ROOT'].'/phpcrud/');
 
-//connect to database
+
+if(array_key_exists('logged_in',$_SESSION) && !empty($_SESSION['logged_in'])){
 
 
-//connecting to database
+}else {
+    $_SESSION['logged_in'] ;
+}
 
+
+if(!$_SESSION['logged_in']){
+    
+  
+
+   header('location:http://localhost/phpcrud/admin/views/admin_access/login.php' );
+}
 
 //for buffer and take all file in variable. later anyone can print to take variable
 ob_start();

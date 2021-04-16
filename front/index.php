@@ -1,5 +1,5 @@
 <?php
-include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
+
 
 ?>
 <!doctype html>

@@ -91,16 +91,24 @@ ob_start();
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="nid_birth"><h4>NID or birth certificate no</p></h4></label>
+                                            <input id="nid_birth" placeholder="Enter Your ID or birth certificate no" value="" type="text" name="nid_birth" class="form-control">
+                                            <div class="help-block text-muted">Enter Your ID or birth certificate no</div>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
                                     
                                
-                                    <!-- <div class="col-lg-6">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="password"><h4>Password</h4></label>
                                             <input id="password" placeholder="Enter Your Password" value="" type="password" name="password" class="form-control">
                                             <div class="help-block text-muted">Enter Your Password</div>
                                             <div class="help-block with-errors"></div>
                                         </div>
-                                    </div> -->
+                                    </div>
                                     <!-- <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="c_password"><h4>Confirm Password</p></h4></label>
@@ -111,8 +119,8 @@ ob_start();
                                     </div> -->
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label for="photo"><h4>Profile Photo</h4></label>
-                                            <input id="photo"  value="" type="file" name="photo" class="form-control">
+                                            <label for="picture"><h4>Profile Photo</h4></label>
+                                            <input id="picture"  value="" type="file" name="picture" class="form-control">
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>

@@ -76,9 +76,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="lazy/index.php">
+                <a class="nav-link" href="http://localhost/phpcrud/front/index.php">
                     <span data-feather="shopping-cart"></span>
-                    Lazies
+                    Frontend
                 </a>
             </li>
             <li class="nav-item">

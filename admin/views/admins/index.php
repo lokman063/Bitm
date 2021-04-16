@@ -1,7 +1,4 @@
 <?php
-
-
-
 include_once($_SERVER["DOCUMENT_ROOT"]."/phpcrud/bootstrap.php");
 use Bitm\Utility\Message;
 use Bitm\Utility\Utility;
@@ -142,7 +139,7 @@ ob_start();
                                 foreach($admins as $admin){
                                     ?>
                                     <tr class="text-center table-size">
-                                        <td class="admin-sl"> <td class="image-prod"><div class="img"><img src="<?=UPLOADS?><?php echo $admin['photo']?>" width="50px" height="40px"></div></td></td>
+                                        <td class="admin-sl"> <td class="image-prod"><div class="img"><img src="<?=UPLOADS?><?php echo $admin['picture']?>" width="50px" height="40px"></div></td></td>
                                         <td class="admin-name">
                                             <h5><a href="view.php?id=<?php echo $admin['id'] ?>">
                                             <?php echo $admin['first_name']." ".$admin['last_name'];?> </a></h5>
